@@ -35,7 +35,7 @@ MimeMessage::MimeMessage(bool createAutoMimeContent) :
     if (createAutoMimeContent) {
         d->content = new MimeMultiPart();
     }
-    
+
     d->autoMimeContentCreated = createAutoMimeContent;
 }
 
@@ -169,7 +169,7 @@ void MimeMessage::addPart(MimePart *part)
 {
     Q_D(MimeMessage);
     if (typeid(*d->content) == typeid(MimeMultiPart)) {
-        ((MimeMultiPart*) d->content)->addPart(part);
+        static_cast<MimeMultiPart*>(d->content)->addPart(part);
     }
 }
 
@@ -251,8 +251,8 @@ QByteArray MimeMessagePrivate::encodeData(MimePart::Encoding codec, const QStrin
         int encoded = 0;
         const QByteArray result = QuotedPrintable::encode(simple, true, &printable, &encoded);
         int sum = printable + encoded;
-        qCDebug(SIMPLEMAIL_MIMEMSG) << data << result << printable << encoded << sum << ((double) printable/sum) << (encoded/sum);
-        if (sum != 0 && ((double) printable/sum) >= 0.8) {
+        qCDebug(SIMPLEMAIL_MIMEMSG) << data << result << printable << encoded << sum << (double(printable) / sum) << (encoded/sum);
+        if (sum != 0 && (double(printable) / sum) >= 0.8) {
             return " =?utf-8?Q?" + result + "?=";
         } else {
             return " =?utf-8?B?" + data.toUtf8().toBase64() + "?=";

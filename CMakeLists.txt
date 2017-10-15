@@ -9,8 +9,8 @@ if (POLICY CMP0063)
 endif()
 
 find_package(Qt5 5.5.0 COMPONENTS
-    Core
-    Network
+	Core
+	Network
 )
 
 set(SIMPLEMAIL_VERSION_MAJOR  "1")
@@ -34,11 +34,11 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Forbid in-tree building
-if(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
-      message(STATUS "Please do an out-of-tree build:")
-      message(STATUS "rm -f CMakeCache.txt && mkdir build && cd build; cmake .. && make")
-      message(FATAL_ERROR "In-tree-build detected!")
-endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+	  message(STATUS "Please do an out-of-tree build:")
+	  message(STATUS "rm -f CMakeCache.txt && mkdir build && cd build; cmake .. && make")
+	  message(FATAL_ERROR "In-tree-build detected!")
+endif(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 
 #
 # Options
@@ -49,7 +49,7 @@ option(ENABLE_MAINTAINER_CFLAGS "Enable maintainer CFlags" OFF)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX
-    "/usr" CACHE PATH "simplemail default install prefix" FORCE)
+	"/usr" CACHE PATH "simplemail default install prefix" FORCE)
 endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 #
@@ -76,54 +76,54 @@ configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h)
 # Custom C flags
 #
 if (ENABLE_MAINTAINER_CFLAGS)
-    set (MAINTAINER_CFLAGS "-Werror -Wall -Wcast-align -Wno-uninitialized -Wempty-body -Wformat-security -Wformat -Winit-self")
-    add_definitions(${MAINTAINER_CFLAGS}
-        -DQT_DEPRECATED_WARNINGS
-    )
+	set (MAINTAINER_CFLAGS "-Werror -Wall -Wcast-align -Wno-uninitialized -Wempty-body -Wformat-security -Wformat -Winit-self")
+	add_definitions(${MAINTAINER_CFLAGS}
+		-DQT_DEPRECATED_WARNINGS
+	)
 endif ()
 
 add_definitions(
-    -DQT_NO_KEYWORDS
-    -DQT_NO_CAST_TO_ASCII
-    -DQT_NO_CAST_FROM_ASCII
-    -DQT_STRICT_ITERATORS
-    -DQT_NO_URL_CAST_FROM_STRING
-    -DQT_NO_CAST_FROM_BYTEARRAY
-    -DQT_USE_QSTRINGBUILDER
+	-DQT_NO_KEYWORDS
+	-DQT_NO_CAST_TO_ASCII
+	-DQT_NO_CAST_FROM_ASCII
+	-DQT_STRICT_ITERATORS
+	-DQT_NO_URL_CAST_FROM_STRING
+	-DQT_NO_CAST_FROM_BYTEARRAY
+	-DQT_USE_QSTRINGBUILDER
 )
 
 add_definitions(
-    -DQT_DISABLE_DEPRECATED_BEFORE=0x050800
+	-DQT_DISABLE_DEPRECATED_BEFORE=0x050800
 )
 
 add_definitions(
-    -std=c++11
+	-std=c++11
 )
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/SimpleMail
-    ${CMAKE_CURRENT_BINARY_DIR}
+	${CMAKE_SOURCE_DIR}
+	${CMAKE_CURRENT_SOURCE_DIR}/SimpleMail
+	${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # cmake config files
 configure_file(${CMAKE_MODULE_PATH}/simplemailqt5-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/simplemailqt5-config.cmake
-    @ONLY
+	${CMAKE_CURRENT_BINARY_DIR}/simplemailqt5-config.cmake
+	@ONLY
 )
 configure_file(${CMAKE_MODULE_PATH}/simplemailqt5-config-version.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/simplemailqt5-config-version.cmake
-    @ONLY
+	${CMAKE_CURRENT_BINARY_DIR}/simplemailqt5-config-version.cmake
+	@ONLY
 )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/simplemailqt5-config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/simplemailqt5-config-version.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/simplemailqt5/
+	${CMAKE_CURRENT_BINARY_DIR}/simplemailqt5-config-version.cmake
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/simplemailqt5/
 )
 install(EXPORT SimpleMailQt5Targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/simplemailqt5/"
-    FILE SimpleMailQt5Targets.cmake
-    NAMESPACE SimpleMail::
-    COMPONENT Devel
+	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/simplemailqt5/"
+	FILE SimpleMailQt5Targets.cmake
+	NAMESPACE SimpleMail::
+	COMPONENT Devel
 )
 
 add_subdirectory(src)

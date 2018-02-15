@@ -52,7 +52,7 @@ public:
     QString lastError;
 
     QString host = QLatin1String("localhost");
-    int port = 25;
+    quint16 port = 25;
     Sender::ConnectionType connectionType;
     QString name = QHostInfo::localHostName();
     Sender::PeerVerificationType peerVerificationType = Sender::VerifyPeer;

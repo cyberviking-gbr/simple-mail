@@ -35,7 +35,7 @@ const unsigned char Minus = 0x2d;
 const unsigned char Slash = 0x2f;
 const unsigned char Underscore = 0x5f;
 
-static inline bool requiresEscape(unsigned char input, bool rfc2047)
+static inline bool requiresEscape(char input, bool rfc2047)
 {
     // For both, we need to escape '=' and anything unprintable
     bool escape = ((input > MaxPrintableRange) ||
@@ -62,7 +62,7 @@ QByteArray QuotedPrintable::encode(const QByteArray &input, bool rfc2047, int *p
 {
     QByteArray output;
 
-    unsigned char byte;
+    char byte;
     static const char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     for (int i = 0; i < input.length() ; ++i) {

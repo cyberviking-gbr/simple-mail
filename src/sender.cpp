@@ -29,7 +29,7 @@ Sender::Sender(QObject *parent) : QObject(parent)
     setConnectionType(TcpConnection);
 }
 
-Sender::Sender(const QString &host, int port, ConnectionType connectionType, QObject *parent) : QObject(parent)
+Sender::Sender(const QString &host, quint16 port, ConnectionType connectionType, QObject *parent) : QObject(parent)
   , d_ptr(new SenderPrivate(this))
 {
     Q_D(Sender);
@@ -93,13 +93,13 @@ void Sender::setHost(const QString &host)
     d->host = host;
 }
 
-int Sender::port() const
+quint16 Sender::port() const
 {
     Q_D(const Sender);
     return d->port;
 }
 
-void Sender::setPort(int port)
+void Sender::setPort(quint16 port)
 {
     Q_D(Sender);
     d->port = port;

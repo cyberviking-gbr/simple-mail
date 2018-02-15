@@ -66,8 +66,8 @@ public:
     };
     Q_ENUM(PeerVerificationType)
 
-    explicit Sender(QObject *parent = 0);
-    Sender(const QString &host, int port, ConnectionType ct, QObject *parent = 0);
+    explicit Sender(QObject *parent = nullptr);
+    Sender(const QString &host, quint16 port, ConnectionType ct, QObject *parent = nullptr);
     virtual ~Sender();
 
     /**
@@ -83,12 +83,12 @@ public:
     /**
      * Returns the port of the SMTP server
      */
-    int port() const;
+    quint16 port() const;
 
     /**
      * Defines the port of the SMTP server
      */
-    void setPort(int port);
+    void setPort(quint16 port);
 
     /**
      * Defines the client's name. This name is sent by the EHLO command.
@@ -171,7 +171,7 @@ public:
      * Defines the response timeout when waiting for a message to be processed by the SMTP server
      */
     void setResponseTimeout(int msec);
-    
+
     /**
      * Returns the timeout when waiting for a message data to be sent to the SMTP server
      */
